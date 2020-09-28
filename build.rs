@@ -8,6 +8,17 @@ use cc_version::{cc_version, Version};
 use std::env;
 use std::path::Path;
 
+#[cfg(feature = "8086")]
+const SPECIALIZED_PATH: &str = "8086";
+#[cfg(feature = "8086-sse")]
+const SPECIALIZED_PATH: &str = "8086-SSE";
+#[cfg(feature = "arm-vfpv2")]
+const SPECIALIZED_PATH: &str = "ARM-VFPv2";
+#[cfg(feature = "arm-vfpv2-defaultnan")]
+const SPECIALIZED_PATH: &str = "ARM-VFPv2-defaultNaN";
+#[cfg(feature = "riscv")]
+const SPECIALIZED_PATH: &str = "RISCV";
+
 fn main() {
     let mut builder = cc::Build::new();
 
@@ -337,7 +348,7 @@ fn main() {
             "f128M_le_quiet.c",
             "f128M_lt_quiet.c",
         ];
-        let specialized_source_path = softfloat_source.join(Path::new("8086-SSE"));
+        let specialized_source_path = softfloat_source.join(Path::new(SPECIALIZED_PATH));
         builder
             .include(softfloat_build.join(Path::new("Linux-x86_64-GCC")))
             .include(&specialized_source_path)
