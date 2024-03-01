@@ -20,6 +20,12 @@ extern "C" {
 
 #[derive(Copy, Clone, Debug)]
 #[repr(C)]
+pub struct bfloat16_t {
+    pub v: u16,
+}
+
+#[derive(Copy, Clone, Debug)]
+#[repr(C)]
 pub struct float16_t {
     pub v: u16,
 }
@@ -111,6 +117,9 @@ extern "C" {
     pub fn i64_to_extF80M(_: i64, _: *mut extFloat80_t);
     pub fn i64_to_f128M(_: i64, _: *mut float128_t);
 
+    pub fn bf16_to_f32(_: bfloat16_t) -> float32_t;
+    pub fn bf16_isSignalingNaN(_: bfloat16_t) -> bool;
+
     pub fn f16_to_ui32(_: float16_t, _: uint_fast8_t, _: bool) -> uint_fast32_t;
     pub fn f16_to_ui64(_: float16_t, _: uint_fast8_t, _: bool) -> uint_fast64_t;
     pub fn f16_to_i32(_: float16_t, _: uint_fast8_t, _: bool) -> int_fast32_t;
@@ -150,6 +159,7 @@ extern "C" {
     pub fn f32_to_ui64_r_minMag(_: float32_t, _: bool) -> uint_fast64_t;
     pub fn f32_to_i32_r_minMag(_: float32_t, _: bool) -> int_fast32_t;
     pub fn f32_to_i64_r_minMag(_: float32_t, _: bool) -> int_fast64_t;
+    pub fn f32_to_bf16(_: float32_t) -> bfloat16_t;
     pub fn f32_to_f16(_: float32_t) -> float16_t;
     pub fn f32_to_f64(_: float32_t) -> float64_t;
     pub fn f32_to_extF80(_: float32_t) -> extFloat80_t;
@@ -374,6 +384,8 @@ mod tests {
             i64_to_f128,
             i64_to_extF80M,
             i64_to_f128M,
+            bf16_to_f32,
+            bf16_isSignalingNaN,
             f16_to_ui32,
             f16_to_ui64,
             f16_to_i32,
@@ -411,6 +423,7 @@ mod tests {
             f32_to_ui64_r_minMag,
             f32_to_i32_r_minMag,
             f32_to_i64_r_minMag,
+            f32_to_bf16,
             f32_to_f16,
             f32_to_f64,
             f32_to_extF80,
