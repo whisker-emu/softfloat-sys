@@ -24,28 +24,76 @@ pub struct bfloat16_t {
     pub v: u16,
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Default)]
 #[repr(C)]
 pub struct float16_t {
     pub v: u16,
 }
 
-#[derive(Copy, Clone, Debug)]
+impl float16_t {
+    pub fn new(v: u16) -> Self {
+        Self { v }
+    }
+}
+
+impl From<u16> for float16_t {
+    fn from(value: u16) -> Self {
+        Self::new(value)
+    }
+}
+
+#[derive(Copy, Clone, Debug, Default)]
 #[repr(C)]
 pub struct float32_t {
     pub v: u32,
 }
 
-#[derive(Copy, Clone, Debug)]
+impl float32_t {
+    pub fn new(v: u32) -> Self {
+        Self { v }
+    }
+}
+
+impl From<u32> for float32_t {
+    fn from(value: u32) -> Self {
+        Self::new(value)
+    }
+}
+
+#[derive(Copy, Clone, Debug, Default)]
 #[repr(C)]
 pub struct float64_t {
     pub v: u64,
 }
 
-#[derive(Copy, Clone, Debug)]
+impl float64_t {
+    pub fn new(v: u64) -> Self {
+        Self { v }
+    }
+}
+
+impl From<u64> for float64_t {
+    fn from(value: u64) -> Self {
+        Self::new(value)
+    }
+}
+
+#[derive(Copy, Clone, Debug, Default)]
 #[repr(C)]
 pub struct float128_t {
     pub v: [u64; 2],
+}
+
+impl float128_t {
+    pub fn new(v: [u64; 2]) -> Self {
+        Self { v }
+    }
+}
+
+impl From<u128> for float128_t {
+    fn from(value: u128) -> Self {
+        Self::new([(value & u128::from(u64::MAX)) as u64, (value >> 64) as u64])
+    }
 }
 
 #[cfg(target_endian = "little")]
